@@ -21,7 +21,24 @@ import BalloonState from "./BalloonState";
  * are fired to get the player position
  */
 export default class ZeroGravity extends BalloonState {
+
 	onEnter(): void {
+		this.gravity = 0; 
+		console.log("ENTERED");
+		(<AnimatedSprite>this.owner).animation.play("IDLE", true);
+	}
+
+	update(deltaT: number): void {
+		const tileSize = 32; 
+		super.update(deltaT);
+
+        this.parent.velocity.x = this.parent.direction.x * this.parent.speed;
+		if (this.playerPos && this.owner.position.distanceTo(this.playerPos) <= tileSize * 10) {
+			console.log("called");
+			this.parent.velocity.x *=2;
+		}
+
+		this.owner.move(this.parent.velocity.scaled(deltaT));
 	}
 
 	onExit(): Record<string, any> {

@@ -136,15 +136,11 @@ export default class GameLevel extends Scene {
 
                 case HW5_Events.BALLOON_POPPED:
                     {
-                        console.log("PPOED");
-                        console.log(event); 
-                        console.log(event.data.get)
                         // An balloon collided with the player, destroy it and use the particle system
                         this.balloonsPopped++;
                         this.balloonLabel.text = "Balloons Left: " + (this.totalBalloons - this.balloonsPopped);
                         let node = this.sceneGraph.getNode(event.data.get("owner"));
-                        console.log(node);
-                        
+
                         // Set mass based on color
                         let particleMass = 0;
                         if ((<BalloonController>node._ai).color == HW5_Color.RED) {
@@ -428,7 +424,7 @@ export default class GameLevel extends Scene {
             this.incPlayerLife(-1);
         }
         this.emitter.fireEvent(HW5_Events.BALLOON_POPPED, {owner: balloon.id}); 
-        console.log("COOLIDE");
+        this.emitter.fireEvent(GameEventType.PLAY_SFX, {key: "pop"})
     }
     
 
