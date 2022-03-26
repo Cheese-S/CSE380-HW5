@@ -89,6 +89,7 @@ export default class GameLevel extends Scene {
         this.levelEndTimer = new Timer(3000, () => {
             // After the level end timer ends, fade to black and then go to the next scene
             this.levelTransitionScreen.tweens.play("fadeIn");
+            this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "level_music"})
         });
 
         // 3 second cooldown for changing suits
